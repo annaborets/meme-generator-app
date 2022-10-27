@@ -1,0 +1,67 @@
+<mat-card class="wrapper">
+  <mat-card class="formgroup-container">
+    <div class="formgroup">
+      <div class="formgroup__item">
+        <label for="top-text">Top text</label>
+        <input class="input" id="top-text" type="text" [(ngModel)]="topText" />
+      </div>
+
+      <div class="formgroup__item">
+        <label for="bottom-text">Bottom text</label>
+        <input
+          class="input"
+          id="bottom-text"
+          type="text"
+          [(ngModel)]="bottomText"
+        />
+      </div>
+      <div class="formgroup__item">
+        <label for="color">Text color</label>
+        <color-chrome
+          class="color-picker"
+          (onChangeComplete)="canvasTextColor($event)"
+        ></color-chrome>
+      </div>
+      <div>
+        <div>
+          <label id="example-name-label" class="example-name-label"
+            >Text size:
+          </label>
+          <label class="example-value-label">{{ textSize }}</label>
+        </div>
+        <mat-slider
+          class="example-margin"
+          [disabled]="slider.disabled"
+          [invert]="slider.invert"
+          [max]="slider.max"
+          [min]="slider.min"
+          [step]="slider.step"
+          [thumbLabel]="slider.thumbLabel"
+          [tickInterval]="getSliderTickInterval()"
+          [(ngModel)]="textSize"
+          [vertical]="slider.vertical"
+          aria-labelledby="example-name-label"
+          color="primary"
+        >
+        </mat-slider>
+      </div>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="toDownload()"
+        class="btn"
+      >
+        Download
+      </button>
+      <button
+        mat-raised-button
+        color="basic"
+        (click)="reloadPage()"
+        class="btn"
+      >
+        Make new meme
+      </button>
+    </div>
+  </mat-card>
+  <div id="canvasContainer"></div>
+</mat-card>
