@@ -1,50 +1,80 @@
 <mat-card class="wrapper">
   <mat-card class="formgroup-container">
     <div class="formgroup">
-      <div class="formgroup__item">
-        <label for="top-text">Top text</label>
-        <input class="input" id="top-text" type="text" [(ngModel)]="topText" />
-      </div>
-
-      <div class="formgroup__item">
-        <label for="bottom-text">Bottom text</label>
-        <input
-          class="input"
-          id="bottom-text"
-          type="text"
-          [(ngModel)]="bottomText"
-        />
-      </div>
-      <div class="formgroup__item">
-        <label for="color">Text color</label>
-        <color-chrome
-          class="color-picker"
-          (onChangeComplete)="canvasTextColor($event)"
-        ></color-chrome>
-      </div>
-      <div>
-        <div>
-          <label id="example-name-label" class="example-name-label"
-            >Text size:
-          </label>
-          <label class="example-value-label">{{ textSize }}</label>
+      <div class="formgroup__block">
+        <div class="formgroup__item">
+          <label for="top-text">Top text</label>
+          <input
+            class="input"
+            id="top-text"
+            type="text"
+            [(ngModel)]="topText"
+          />
         </div>
-        <mat-slider
-          class="example-margin"
-          [disabled]="slider.disabled"
-          [invert]="slider.invert"
-          [max]="slider.max"
-          [min]="slider.min"
-          [step]="slider.step"
-          [thumbLabel]="slider.thumbLabel"
-          [tickInterval]="getSliderTickInterval()"
-          [(ngModel)]="textSize"
-          [vertical]="slider.vertical"
-          aria-labelledby="example-name-label"
+        <button
+          mat-icon-button
           color="primary"
+          class="icon"
+          (click)="openTopTextDialog()"
         >
-        </mat-slider>
+          <mat-icon>color_lens</mat-icon>
+        </button>
+        <button
+          [(fontPicker)]="topFont"
+          (fontPickerChange)="handleTopFontChange($event)"
+          [fpWidth]="'auto'"
+          [fpPosition]="'bottom'"
+          [fpPositionOffset]="'0%'"
+          [fpPositionRelativeToArrow]="false"
+          [fpPresetLabel]="'Preset fonts'"
+          [fpPresetFonts]="presetFonts"
+          mat-icon-button
+          color="primary"
+          class="icon"
+        >
+          <mat-icon>font_download</mat-icon>
+        </button>
       </div>
+      <div class="formgroup__block">
+        <div class="formgroup__item">
+          <label for="bottom-text">Bottom text</label>
+          <input
+            class="input"
+            id="bottom-text"
+            type="text"
+            [(ngModel)]="bottomText"
+          />
+        </div>
+        <button
+          mat-icon-button
+          color="primary"
+          class="icon"
+          (click)="openBottomTextDialog()"
+        >
+          <mat-icon>color_lens</mat-icon>
+        </button>
+        <button
+          [(fontPicker)]="bottomFont"
+          (fontPickerChange)="handleBottomFontChange($event)"
+          [fpWidth]="'auto'"
+          [fpPosition]="'bottom'"
+          [fpPositionOffset]="'0%'"
+          [fpPositionRelativeToArrow]="false"
+          [fpPresetLabel]="'Preset fonts'"
+          [fpPresetFonts]="presetFonts"
+          mat-icon-button
+          color="primary"
+          class="icon"
+        >
+          <mat-icon>font_download</mat-icon>
+        </button>
+      </div>
+      <!-- <div [ngStyle]="font?.getStyles()">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur
+        voluptates natus nesciunt, nemo deleniti dolorem quo debitis incidunt
+        architecto velit totam sequi blanditiis? Omnis voluptatem, eius fugiat
+        sequi eveniet sapiente.
+      </div> -->
       <button
         mat-raised-button
         color="primary"

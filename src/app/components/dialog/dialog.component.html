@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>
+  Modify <span>{{ data }}</span> text
+</h1>
+<div mat-dialog-content>
+  <label for="color">Text color</label>
+  <color-chrome
+    class="color-picker"
+    (onChangeComplete)="canvasTextColor($event)"
+  ></color-chrome>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+    <button mat-button mat-dialog-close (click)="saveChanges(data)">
+      Save changes
+    </button>
+  </div>
+</div>

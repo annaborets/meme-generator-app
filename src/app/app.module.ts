@@ -10,11 +10,24 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
-import { MatSliderModule } from '@angular/material/slider';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { DialogComponent } from './components/dialog/dialog.component';
+import { FontPickerModule } from 'ngx-font-picker';
+import { FONT_PICKER_CONFIG } from 'ngx-font-picker';
+import { FontPickerConfigInterface } from 'ngx-font-picker';
+
+const DEFAULT_FONT_PICKER_CONFIG: FontPickerConfigInterface = {
+  apiKey: 'AIzaSyDm6XEa0gVwGjkYYnrJi-Jk-AkkYyMFBoE',
+};
 
 @NgModule({
-  declarations: [AppComponent, ToolbarComponent, GeneratorComponent],
+  declarations: [
+    AppComponent,
+    ToolbarComponent,
+    GeneratorComponent,
+    DialogComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -23,10 +36,16 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatButtonModule,
     MatCardModule,
     FormsModule,
-    MatSliderModule,
     MatDialogModule,
+    MatIconModule,
+    FontPickerModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: FONT_PICKER_CONFIG,
+      useValue: DEFAULT_FONT_PICKER_CONFIG,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
