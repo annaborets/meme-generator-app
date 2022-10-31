@@ -34,4 +34,10 @@ export class DialogComponent implements OnInit {
       data: this.changedTextColor,
     });
   }
+
+  public cancelChanges() {
+    this.dialogRef.close({
+      data: this.defaultTextColor,
+    });
+  }
 }

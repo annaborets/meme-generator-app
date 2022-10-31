@@ -3,7 +3,7 @@ import { ColorRGB } from 'src/app/models/textData';
 import { MatDialog } from '@angular/material/dialog';
 import * as p5 from 'p5';
 import { DialogComponent } from '../dialog/dialog.component';
-import { Font, FontInterface, FontPickerComponent } from 'ngx-font-picker';
+import { Font, FontInterface } from 'ngx-font-picker';
 
 @Component({
   selector: 'app-generator',
@@ -11,6 +11,9 @@ import { Font, FontInterface, FontPickerComponent } from 'ngx-font-picker';
   styleUrls: ['./generator.component.scss'],
 })
 export class GeneratorComponent implements OnInit {
+  private canvas: any;
+  private canvasInstance: any;
+  private img: any;
   private _presetFonts = [
     'Arial',
     'Times',
@@ -20,25 +23,23 @@ export class GeneratorComponent implements OnInit {
     'Roboto Slab',
   ];
 
+  public presetFonts = this._presetFonts;
+  public topText = '';
+  public bottomText = '';
+
   public topFont: FontInterface = new Font({
     family: 'Roboto',
     size: '50px',
     style: 'regular',
     styles: ['regular'],
   });
+
   public bottomFont: FontInterface = new Font({
     family: 'Roboto',
     size: '50px',
     style: 'regular',
     styles: ['regular'],
   });
-  public presetFonts = this._presetFonts;
-  private canvas: any;
-  private canvasInstance: any;
-  private img: any;
-
-  public topText = '';
-  public bottomText = '';
 
   public defaultColor: ColorRGB = {
     r: 255,
@@ -68,11 +69,6 @@ export class GeneratorComponent implements OnInit {
       };
 
       s.draw = () => {
-        // s.strokeWeight(5);
-        // s.stroke(255);
-        // if (s.mouseIsPressed === true) {
-        //   s.line(s.mouseX, s.mouseY, s.pmouseX, s.pmouseY);
-        // }
         if (this.img) {
           s.image(this.img, 0, 0, 600, 400);
           s.textFont(this.topFont.family);
@@ -93,14 +89,6 @@ export class GeneratorComponent implements OnInit {
             this.defaultBottomTextColor.b
           );
           s.text(this.bottomText, 100, 300, 400, 400);
-          // .textSize(this.defaultTopTextData.textSize)
-          // .fill(
-          //   this.defaultTopTextData.color.r,
-          //   this.defaultTopTextData.color.g,
-          //   this.defaultTopTextData.color.b
-          // );
-          // s.textAlign('center');
-          // s.textFont('Comic Sans MS');
         }
       };
 
@@ -129,7 +117,7 @@ export class GeneratorComponent implements OnInit {
     return this.bottomFont;
   }
 
-  openTopTextDialog() {
+  public openTopTextDialog() {
     let dialogRef = this.dialog.open(DialogComponent, {
       data: 'top',
     });
@@ -138,7 +126,7 @@ export class GeneratorComponent implements OnInit {
     });
   }
 
-  openBottomTextDialog() {
+  public openBottomTextDialog() {
     let dialogRef = this.dialog.open(DialogComponent, {
       data: 'bottom',
     });

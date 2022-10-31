@@ -18,7 +18,7 @@ import { FONT_PICKER_CONFIG } from 'ngx-font-picker';
 import { FontPickerConfigInterface } from 'ngx-font-picker';
 
 const DEFAULT_FONT_PICKER_CONFIG: FontPickerConfigInterface = {
-  apiKey: 'AIzaSyDm6XEa0gVwGjkYYnrJi-Jk-AkkYyMFBoE',
+  apiKey: 'AIzaSyAUA_BXYkGQTH08pxeK4fY8rjK6wkXnIDw',
 };
 
 @NgModule({

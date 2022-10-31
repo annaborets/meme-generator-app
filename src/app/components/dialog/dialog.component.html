@@ -7,9 +7,14 @@
     class="color-picker"
     (onChangeComplete)="canvasTextColor($event)"
   ></color-chrome>
-  <div mat-dialog-actions>
-    <button mat-button mat-dialog-close>Close</button>
-    <button mat-button mat-dialog-close (click)="saveChanges(data)">
+  <div mat-dialog-actions class="buttons">
+    <button mat-button mat-dialog-close (click)="cancelChanges()">Close</button>
+    <button
+      mat-button
+      color="primary"
+      mat-dialog-close
+      (click)="saveChanges(data)"
+    >
       Save changes
     </button>
   </div>
