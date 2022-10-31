@@ -22,34 +22,39 @@ export class GeneratorComponent implements OnInit {
     'Open Sans',
     'Roboto Slab',
   ];
+  private draggingTop = false;
+  private draggingBottom = false;
+  private xTop = 100;
+  private yTop = 50;
+  private xBottom = 100;
+  private yBottom = 300;
+  private topWidth = 400;
+  private topHeight = 400;
+  private bottomWidth = 400;
+  private bottomHeight = 400;
 
   public presetFonts = this._presetFonts;
   public topText = '';
   public bottomText = '';
-
   public topFont: FontInterface = new Font({
     family: 'Roboto',
     size: '50px',
     style: 'regular',
     styles: ['regular'],
   });
-
   public bottomFont: FontInterface = new Font({
     family: 'Roboto',
     size: '50px',
     style: 'regular',
     styles: ['regular'],
   });
-
   public defaultColor: ColorRGB = {
     r: 255,
     g: 255,
     b: 255,
     a: 1,
   };
-
   public defaultTopTextColor: ColorRGB = this.defaultColor;
-
   public defaultBottomTextColor: ColorRGB = this.defaultColor;
 
   constructor(public dialog: MatDialog) {}
@@ -66,6 +71,8 @@ export class GeneratorComponent implements OnInit {
         this.canvas.fill('white');
         this.canvas.text('Drop file from the device', 300, 200);
         this.canvas.drop(s.gotFile);
+        this.canvas.mousePressed(s.pressed);
+        this.canvas.mouseReleased(s.released);
       };
 
       s.draw = () => {
@@ -79,7 +86,13 @@ export class GeneratorComponent implements OnInit {
             this.defaultTopTextColor.g,
             this.defaultTopTextColor.b
           );
-          s.text(this.topText, 100, 50, 400, 400);
+          s.text(
+            this.topText,
+            this.xTop,
+            this.yTop,
+            this.topWidth,
+            this.topHeight
+          );
           s.textFont(this.bottomFont.family);
           s.textStyle(this.bottomFont.style);
           s.textSize(parseFloat(this.bottomFont.size));
@@ -88,8 +101,56 @@ export class GeneratorComponent implements OnInit {
             this.defaultBottomTextColor.g,
             this.defaultBottomTextColor.b
           );
-          s.text(this.bottomText, 100, 300, 400, 400);
+          s.text(
+            this.bottomText,
+            this.xBottom,
+            this.yBottom,
+            this.bottomWidth,
+            this.bottomHeight
+          );
+          s.update();
         }
+      };
+
+      s.update = () => {
+        if (this.draggingTop) {
+          this.xTop = s.mouseX + s.offsetX;
+          this.yTop = s.mouseY + s.offsetY;
+        }
+        if (this.draggingBottom) {
+          this.xBottom = s.mouseX + s.offsetX;
+          this.yBottom = s.mouseY + s.offsetY;
+        }
+      };
+
+      s.pressed = () => {
+        if (
+          s.mouseX > this.xTop &&
+          s.mouseX < this.xTop + this.topWidth &&
+          s.mouseY > this.yTop &&
+          s.mouseY < this.yTop + this.topHeight
+        ) {
+          this.draggingBottom = false;
+          this.draggingTop = true;
+          s.offsetX = this.xTop - s.mouseX;
+          s.offsetY = this.yTop - s.mouseY;
+        }
+        if (
+          s.mouseX > this.xBottom &&
+          s.mouseX < this.xBottom + this.bottomWidth &&
+          s.mouseY > this.yBottom &&
+          s.mouseY < this.yBottom + this.bottomHeight
+        ) {
+          this.draggingTop = false;
+          this.draggingBottom = true;
+          s.offsetX = this.xBottom - s.mouseX;
+          s.offsetY = this.yBottom - s.mouseY;
+        }
+      };
+
+      s.released = () => {
+        this.draggingTop = false;
+        this.draggingBottom = false;
       };
 
       s.gotFile = (file: any) => {
