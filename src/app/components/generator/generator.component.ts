@@ -1,63 +1,66 @@
 import { Component, OnInit } from '@angular/core';
-import { ColorRGB } from 'src/app/models/textData';
 import { MatDialog } from '@angular/material/dialog';
+
 import * as p5 from 'p5';
-import { DialogComponent } from '../dialog/dialog.component';
 import { Font, FontInterface } from 'ngx-font-picker';
+
+import { ColorRGB } from 'src/app/models/text-data';
+import { DialogComponent } from 'src/app/components/dialog/dialog.component';
 
 @Component({
   selector: 'app-generator',
   templateUrl: './generator.component.html',
-  styleUrls: ['./generator.component.scss'],
+  styleUrls: ['./generator.component.scss']
 })
 export class GeneratorComponent implements OnInit {
-  private canvas: any;
-  private canvasInstance: any;
-  private img: any;
-  private _presetFonts = [
-    'Arial',
-    'Times',
-    'Courier',
-    'Lato',
-    'Open Sans',
-    'Roboto Slab',
-  ];
-  private draggingTop = false;
-  private draggingBottom = false;
-  private xTop = 100;
-  private yTop = 50;
-  private xBottom = 100;
-  private yBottom = 300;
-  private topWidth = 400;
-  private topHeight = 400;
-  private bottomWidth = 400;
-  private bottomHeight = 400;
-
-  public presetFonts = this._presetFonts;
   public topText = '';
   public bottomText = '';
   public topFont: FontInterface = new Font({
     family: 'Roboto',
     size: '50px',
     style: 'regular',
-    styles: ['regular'],
+    styles: ['regular']
   });
   public bottomFont: FontInterface = new Font({
     family: 'Roboto',
     size: '50px',
     style: 'regular',
-    styles: ['regular'],
+    styles: ['regular']
   });
   public defaultColor: ColorRGB = {
     r: 255,
     g: 255,
     b: 255,
-    a: 1,
+    a: 1
   };
+  public presetFonts = [
+    'Arial',
+    'Times',
+    'Courier',
+    'Lato',
+    'Open Sans',
+    'Roboto Slab'
+  ];
   public defaultTopTextColor: ColorRGB = this.defaultColor;
   public defaultBottomTextColor: ColorRGB = this.defaultColor;
 
-  constructor(public dialog: MatDialog) {}
+  private canvas: any;
+  private canvasInstance: any;
+  private img: any;
+  private draggingTop = false;
+  private draggingBottom = false;
+  private textCoordinates = {
+    xTop: 100,
+    yTop: 50,
+    xBottom: 100,
+    yBottom: 300,
+    topWidth: 400,
+    bottomWidth: 400,
+    topHeight: 400,
+    bottomHeight: 400
+  };
+
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {
     const sketch = (s: any) => {
@@ -88,10 +91,10 @@ export class GeneratorComponent implements OnInit {
           );
           s.text(
             this.topText,
-            this.xTop,
-            this.yTop,
-            this.topWidth,
-            this.topHeight
+            this.textCoordinates.xTop,
+            this.textCoordinates.yTop,
+            this.textCoordinates.topWidth,
+            this.textCoordinates.topHeight
           );
           s.textFont(this.bottomFont.family);
           s.textStyle(this.bottomFont.style);
@@ -103,10 +106,10 @@ export class GeneratorComponent implements OnInit {
           );
           s.text(
             this.bottomText,
-            this.xBottom,
-            this.yBottom,
-            this.bottomWidth,
-            this.bottomHeight
+            this.textCoordinates.xBottom,
+            this.textCoordinates.yBottom,
+            this.textCoordinates.bottomWidth,
+            this.textCoordinates.bottomHeight
           );
           s.update();
         }
@@ -114,37 +117,40 @@ export class GeneratorComponent implements OnInit {
 
       s.update = () => {
         if (this.draggingTop) {
-          this.xTop = s.mouseX + s.offsetX;
-          this.yTop = s.mouseY + s.offsetY;
+          this.textCoordinates.xTop = s.mouseX + s.offsetX;
+          this.textCoordinates.yTop = s.mouseY + s.offsetY;
         }
         if (this.draggingBottom) {
-          this.xBottom = s.mouseX + s.offsetX;
-          this.yBottom = s.mouseY + s.offsetY;
+          this.textCoordinates.xBottom = s.mouseX + s.offsetX;
+          this.textCoordinates.yBottom = s.mouseY + s.offsetY;
         }
       };
 
       s.pressed = () => {
         if (
-          s.mouseX > this.xTop &&
-          s.mouseX < this.xTop + this.topWidth &&
-          s.mouseY > this.yTop &&
-          s.mouseY < this.yTop + this.topHeight
+          s.mouseX > this.textCoordinates.xTop &&
+          s.mouseX <
+            this.textCoordinates.xTop + this.textCoordinates.topWidth &&
+          s.mouseY > this.textCoordinates.yTop &&
+          s.mouseY < this.textCoordinates.yTop + this.textCoordinates.topHeight
         ) {
           this.draggingBottom = false;
           this.draggingTop = true;
-          s.offsetX = this.xTop - s.mouseX;
-          s.offsetY = this.yTop - s.mouseY;
+          s.offsetX = this.textCoordinates.xTop - s.mouseX;
+          s.offsetY = this.textCoordinates.yTop - s.mouseY;
         }
         if (
-          s.mouseX > this.xBottom &&
-          s.mouseX < this.xBottom + this.bottomWidth &&
-          s.mouseY > this.yBottom &&
-          s.mouseY < this.yBottom + this.bottomHeight
+          s.mouseX > this.textCoordinates.xBottom &&
+          s.mouseX <
+            this.textCoordinates.xBottom + this.textCoordinates.bottomWidth &&
+          s.mouseY > this.textCoordinates.yBottom &&
+          s.mouseY <
+            this.textCoordinates.yBottom + this.textCoordinates.bottomHeight
         ) {
           this.draggingTop = false;
           this.draggingBottom = true;
-          s.offsetX = this.xBottom - s.mouseX;
-          s.offsetY = this.yBottom - s.mouseY;
+          s.offsetX = this.textCoordinates.xBottom - s.mouseX;
+          s.offsetY = this.textCoordinates.yBottom - s.mouseY;
         }
       };
 
@@ -180,7 +186,7 @@ export class GeneratorComponent implements OnInit {
 
   public openTopTextDialog() {
     let dialogRef = this.dialog.open(DialogComponent, {
-      data: 'top',
+      data: 'top'
     });
     dialogRef.afterClosed().subscribe((res) => {
       this.defaultTopTextColor = res.data;
@@ -189,7 +195,7 @@ export class GeneratorComponent implements OnInit {
 
   public openBottomTextDialog() {
     let dialogRef = this.dialog.open(DialogComponent, {
-      data: 'bottom',
+      data: 'bottom'
     });
     dialogRef.afterClosed().subscribe((res) => {
       this.defaultBottomTextColor = res.data;

@@ -3,18 +3,15 @@
 </h1>
 <div mat-dialog-content>
   <label for="color">Text color</label>
-  <color-chrome
-    class="color-picker"
-    (onChangeComplete)="canvasTextColor($event)"
-  ></color-chrome>
+  <color-chrome class="color-picker"
+    (onChangeComplete)="canvasTextColor($event)">
+  </color-chrome>
   <div mat-dialog-actions class="buttons">
     <button mat-button mat-dialog-close (click)="cancelChanges()">Close</button>
-    <button
-      mat-button
+    <button mat-button
       color="primary"
       mat-dialog-close
-      (click)="saveChanges(data)"
-    >
+      (click)="saveChanges(data)">
       Save changes
     </button>
   </div>

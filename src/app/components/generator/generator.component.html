@@ -4,23 +4,18 @@
       <div class="formgroup__block">
         <div class="formgroup__item">
           <label for="top-text">Top text</label>
-          <input
-            class="input"
+          <input class="input"
             id="top-text"
             type="text"
-            [(ngModel)]="topText"
-          />
+            [(ngModel)]="topText"/>
         </div>
-        <button
-          mat-icon-button
+        <button mat-icon-button
           color="primary"
           class="icon"
-          (click)="openTopTextDialog()"
-        >
+          (click)="openTopTextDialog()">
           <mat-icon>color_lens</mat-icon>
         </button>
-        <button
-          [(fontPicker)]="topFont"
+        <button [(fontPicker)]="topFont"
           (fontPickerChange)="handleTopFontChange($event)"
           [fpWidth]="'auto'"
           [fpPosition]="'bottom'"
@@ -30,31 +25,25 @@
           [fpPresetFonts]="presetFonts"
           mat-icon-button
           color="primary"
-          class="icon"
-        >
+          class="icon">
           <mat-icon>font_download</mat-icon>
         </button>
       </div>
       <div class="formgroup__block">
         <div class="formgroup__item">
           <label for="bottom-text">Bottom text</label>
-          <input
-            class="input"
+          <input class="input"
             id="bottom-text"
             type="text"
-            [(ngModel)]="bottomText"
-          />
+            [(ngModel)]="bottomText"/>
         </div>
-        <button
-          mat-icon-button
+        <button mat-icon-button
           color="primary"
           class="icon"
-          (click)="openBottomTextDialog()"
-        >
+          (click)="openBottomTextDialog()">
           <mat-icon>color_lens</mat-icon>
         </button>
-        <button
-          [(fontPicker)]="bottomFont"
+        <button [(fontPicker)]="bottomFont"
           (fontPickerChange)="handleBottomFontChange($event)"
           [fpWidth]="'auto'"
           [fpPosition]="'bottom'"
@@ -64,34 +53,37 @@
           [fpPresetFonts]="presetFonts"
           mat-icon-button
           color="primary"
-          class="icon"
-        >
+          class="icon">
           <mat-icon>font_download</mat-icon>
         </button>
       </div>
-      <!-- <div [ngStyle]="font?.getStyles()">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur
-        voluptates natus nesciunt, nemo deleniti dolorem quo debitis incidunt
-        architecto velit totam sequi blanditiis? Omnis voluptatem, eius fugiat
-        sequi eveniet sapiente.
-      </div> -->
-      <button
-        mat-raised-button
+      <button mat-raised-button
         color="primary"
         (click)="toDownload()"
-        class="btn"
-      >
+        class="btn">
         Download
       </button>
-      <button
-        mat-raised-button
+      <button mat-raised-button
         color="basic"
         (click)="reloadPage()"
-        class="btn"
-      >
+        class="btn">
         Make new meme
       </button>
     </div>
+    <share-buttons class="share"
+      theme="circles-light"
+      [include]="[
+        'copy',
+        'facebook',
+        'linkedin',
+        'pinterest',
+        'telegram',
+        'twitter']"
+      [showIcon]="true"
+      [showText]="false"
+      description="Meme generator"
+      class="pt-5">
+    </share-buttons>
   </mat-card>
   <div id="canvasContainer"></div>
 </mat-card>
