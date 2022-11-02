@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 
+import { MatDialog } from '@angular/material/dialog';
 import * as p5 from 'p5';
 import { Font, FontInterface } from 'ngx-font-picker';
 
